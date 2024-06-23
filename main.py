@@ -37,39 +37,42 @@ class Fighter:
     def changeWeapon(self, newWeapon):
         self.weapon = newWeapon
 
-    def fight(self, monster):
-        self.weapon.attack(monster)
+    def attack(self):
+        self.weapon.attack()
 
 class Monster:
-    def __init__(self, weapon):
+    def __init__(self, name, weapon):
+        self.name = name
         self.weapon = weapon
 
-    def fight(self, fighter):
-        self.weapon.attack(fighter)
+    def attack(self):
+        self.weapon.attack()
 
-class Weapon:
+class Weapon(ABC):
     @abstractmethod
     def attack(self):
         pass
 
 class Sword(Weapon):
-    def attack(self, monster):
+    def attack(self):
         print("Мечь атакует монстра!")
 
 class Bow(Weapon):
-    def attack(self, monster):
+    def attack(self):
         print("Лук атакует монстра!")
 
 # Пример использования
 
 fighter = Fighter("Андрей", Sword())
-monster = Monster("Злой монстр")
+monster = Monster("Монстр", Bow())
 
-#Бой начинается
-print(f"{fighter.name} атакует: {fighter.attack()}")
+# Бой начинается
+print(f"{fighter.name} атакует монстра ")
+fighter.attack()
 print(f"{monster.name} контратакует!")
 
 # Смена оружия
 fighter.changeWeapon(Bow())
-print(f"{fighter.name} сменил оружие на лук и стреляет: {fighter.attack()}")
+print(f"{fighter.name} сменил оружие на лук и стреляет: ")
+fighter.attack()
 print(f"{monster.name} падает побежденным!")
